@@ -12,12 +12,7 @@ function App() {
       <Switch>
         <PrivateRoute path='/bubbles' component={BubblePage} />
         <Route path="/login" component={Login} />
-        <Route component={Login} />
-        {/* 
-          Build a PrivateRoute component that will 
-          display BubblePage when you're authenticated 
-        */}
-        
+        <Route component={Login} />        
       </Switch>
       </div>
     </Router>
