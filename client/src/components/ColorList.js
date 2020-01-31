@@ -40,6 +40,12 @@ const ColorList = ({ colors, updateColors }) => {
     e.preventDefault();
     axiosWithAuth()
     .post(`/colors`, newColor)
+    .then(res => {
+      console.log(res)
+      setNewColor(res.data)
+      // props.history.push('/colors')
+    })
+    .catch(err => console.log('addcolor error', err))
   }
 
   const editColor = color => {
@@ -120,6 +126,35 @@ const ColorList = ({ colors, updateColors }) => {
       )}
       <div className="spacer" />
       {/* stretch - build another form here to add a color */}
+      <form onSubmit={addColor}>
+        <legend>add color</legend>
+        <label>
+          Color name:
+          <input
+          onChange={e =>
+            setNewColor({ ...newColor, color: e.target.value })
+          }
+          value={newColor.color}
+          // type='text'
+          // name='color' 
+          />
+        </label>
+        <label>
+          Hex code:
+          <input
+          onChange={e =>
+            setNewColor({
+              ...newColor,
+              code: { hex: e.target.value }
+            })
+          } 
+          value={newColor.code.hex}
+          // type='text'
+          // name='hex'
+          />
+        </label>
+        <button type='submit' className='add-color'>Add New Color</button>
+      </form>
     </div>
   );
 };
