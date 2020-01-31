@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from 'axios';
+import axiosWithAuth from './utils/axiosWithAuth';
 
 const Login = (props) => {
   // make a post request to retrieve a token from the api
@@ -17,18 +18,16 @@ const Login = (props) => {
   })
   };
 
-  const { username, password } = state;
-
   const login = e => {
     e.preventDefault();
     axios
-    .post('http://localhost:5000/api/login', {username, password})
+    .post('http://localhost:5000/api/login', state)
     .then(res => {
       console.log(res);
       localStorage.setItem('token', res.data.payload)
       props.history.push('/bubbles')
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log('err', err))
   }
   return (
     <div className='login'>
@@ -59,7 +58,7 @@ const Login = (props) => {
         <button type='sumbit'>Log in</button>
       </form>
     </div>
-  );
+  )
 };
 
 export default Login;
