@@ -5,16 +5,24 @@ const Login = (props) => {
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
   const [state, setState] = useState({
-    credentials: {
-      username: '',
-      password: ''
-    }
+    username: '',
+    password: ''
+  });
+
+  const handleChange = e => {
+    console.log(e)
+    setState({
+      ...state,
+      [e.target.name]: e.target.value
   })
+  };
+
+  const { username, password } = state;
 
   const login = e => {
     e.preventDefault();
     axios
-    .post('http://localhost:5000/api/login', state.credentials)
+    .post('http://localhost:5000/api/login', {username, password})
     .then(res => {
       console.log(res);
       localStorage.setItem('token', res.data.payload)
@@ -34,7 +42,8 @@ const Login = (props) => {
           type='text'
           name='username'
           placeholder='Enter username'
-          value={state.credentials.username}
+          onChange={handleChange}
+          value={state.username}
           />
         </label>
         <label>
@@ -43,7 +52,8 @@ const Login = (props) => {
           type='password'
           name='password'
           placeholder='Enter password'
-          value={state.credentials.password}
+          onChange={handleChange}
+          value={state.password}
           />
         </label>
         <button type='sumbit'>Log in</button>
